@@ -1,0 +1,30 @@
+Nieuw Contactformulier Bericht - Dua Decor
+
+Er is een nieuw bericht ontvangen via het contactformulier op uw website.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+👤 AFZENDER
+{{from_name}}
+{{from_email}}
+
+📞 TELEFOON
+{{phone}}
+
+📋 ONDERWERP
+{{subject}}
+
+💬 BERICHT
+{{message}}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Reageer direct: mailto:{{from_email}}?subject=Re: {{subject}}
+
+Dua Decor
+Lange Beeldekenstraat 155-157
+2060 Antwerpen, België
+Tel: 0485 46 09 89
+E-mail: info@duadecor.be
+
+Dit bericht is automatisch gegenereerd vanuit het contactformulier.

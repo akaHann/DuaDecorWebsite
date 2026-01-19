@@ -9,6 +9,7 @@ import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { ProductModal } from './components/ProductModal';
 import { ComingSoonModal } from './components/ComingSoonModal';
+import { Toaster } from 'sonner';
 
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -33,6 +34,7 @@ export default function App() {
           isOpen={comingSoonOpen} 
           onClose={() => setComingSoonOpen(false)} 
         />
+        <Toaster position="top-center" richColors />
       </div>
     </LanguageProvider>
   );

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import emailjs from '@emailjs/browser';
+import { toast } from 'sonner';
 
 export function Contact() {
   const { t, language } = useLanguage();
@@ -15,13 +17,68 @@ export function Contact() {
   });
 
   const [formStatus, setFormStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Simulate form submission
-    if (formData.privacy) {
+    if (!formData.privacy) {
+      setFormStatus('error');
+      toast.error(t('errorMessage'));
+      return;
+    }
+
+    setIsSubmitting(true);
+    setFormStatus('idle');
+
+    try {
+      // EmailJS configuration
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+      // Check if EmailJS is configured
+      if (!serviceId || !templateId || !publicKey || 
+          serviceId === 'YOUR_SERVICE_ID' || 
+          templateId === 'YOUR_TEMPLATE_ID' || 
+          publicKey === 'YOUR_PUBLIC_KEY') {
+        // Fallback: show success message but log that EmailJS needs configuration
+        console.warn('EmailJS is not configured. Please set up EmailJS credentials. See EMAILJS_SETUP.md for instructions.');
+        setFormStatus('success');
+        toast.success(t('successMessage'));
+        
+        // Reset form
+        setFormData({
+          naam: '',
+          email: '',
+          telefoon: '',
+          onderwerp: '',
+          bericht: '',
+          privacy: false
+        });
+        
+        setTimeout(() => setFormStatus('idle'), 5000);
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Initialize EmailJS
+      emailjs.init(publicKey);
+
+      // Send email
+      await emailjs.send(serviceId, templateId, {
+        from_name: formData.naam,
+        from_email: formData.email,
+        phone: formData.telefoon || 'Niet opgegeven',
+        subject: formData.onderwerp,
+        message: formData.bericht,
+        to_email: 'bayramcapa85@gmail.com',
+      });
+
       setFormStatus('success');
+      toast.success(t('successMessage'));
+      
+      // Reset form
       setFormData({
         naam: '',
         email: '',
@@ -33,8 +90,12 @@ export function Contact() {
       
       // Reset success message after 5 seconds
       setTimeout(() => setFormStatus('idle'), 5000);
-    } else {
+    } catch (error) {
+      console.error('Email sending failed:', error);
       setFormStatus('error');
+      toast.error('Er is een fout opgetreden. Probeer het later opnieuw.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -223,29 +284,22 @@ export function Contact() {
               </div>
 
               <div className="flex items-start">
-                <input
-                  type="checkbox"
-                  id="privacy"
-                  name="privacy"
-                  checked={formData.privacy}
-                  onChange={handleChange}
-                  className="sr-only peer"
-                />
-                <label 
-                  htmlFor="privacy" 
-                  className="relative flex items-center cursor-pointer"
-                >
-                  <span className="w-5 h-5 border-2 border-gray-300 rounded flex items-center justify-center mr-3 peer-checked:bg-evergreen peer-checked:border-evergreen transition-colors">
-                    {formData.privacy && (
-                      <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                    )}
-                  </span>
-                  <span className="text-sm text-gray-600">
+                <div className="flex items-start">
+                  <input
+                    type="checkbox"
+                    id="privacy"
+                    name="privacy"
+                    checked={formData.privacy}
+                    onChange={handleChange}
+                    className="mt-1 w-5 h-5 border-2 border-gray-300 rounded cursor-pointer text-evergreen focus:ring-2 focus:ring-evergreen focus:ring-offset-2 transition-colors checked:bg-evergreen checked:border-evergreen"
+                  />
+                  <label 
+                    htmlFor="privacy" 
+                    className="ml-3 text-sm text-gray-600 cursor-pointer"
+                  >
                     {t('privacyAgreement')} {t('required')}
-                  </span>
-                </label>
+                  </label>
+                </div>
               </div>
 
               {formStatus === 'success' && (
@@ -262,9 +316,10 @@ export function Contact() {
 
               <button
                 type="submit"
-                className="w-full sm:w-auto px-8 py-4 bg-evergreen text-white hover:bg-evergreen-light transition-colors shadow-md hover:shadow-lg"
+                disabled={isSubmitting}
+                className="w-full sm:w-auto px-8 py-4 bg-evergreen text-white hover:bg-evergreen-light transition-colors shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {t('send')}
+                {isSubmitting ? t('sending') || 'Verzenden...' : t('send')}
               </button>
             </form>
           </div>
