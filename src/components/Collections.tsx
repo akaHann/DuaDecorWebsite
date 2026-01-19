@@ -13,19 +13,19 @@ export function Collections({ onComingSoonClick }: CollectionsProps) {
     {
       title: t('curtainsCollection'),
       description: t('curtainsCollectionDesc'),
-      image: 'https://images.unsplash.com/photo-1694245413199-ca345d2670b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBjdXJ0YWluJTIwZmFicmljJTIwY29sbGVjdGlvbnxlbnwxfHx8fDE3Njg2NTM4Nzl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      image: '/images/collectie_gordijnen.png',
       items: ['300+ stoffen', 'Moderne patronen', 'Klassieke designs', 'Verduisterend']
     },
     {
       title: t('carpetsCollection'),
       description: t('carpetsCollectionDesc'),
-      image: 'https://images.unsplash.com/photo-1752321531183-142f7d8cea65?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXJwZXQlMjBzYW1wbGVzJTIwc2hvd3Jvb218ZW58MXx8fHwxNzY4NjUzODc5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      image: '/images/collectie_tapijten.png',
       items: ['Wol tapijten', 'Synthetische opties', 'Natuurlijke vezels', 'Op maat']
     },
     {
       title: t('wallpaperCollection'),
       description: t('wallpaperCollectionDesc'),
-      image: 'https://images.unsplash.com/photo-1714900864053-3879bd44c69b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3YWxscGFwZXIlMjBzYW1wbGVzJTIwaW50ZXJpb3J8ZW58MXx8fHwxNzY4NjUzODgwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      image: '/images/collecie_behangpapier.png',
       items: ['Trendy designs', 'Natuurlijke materialen', 'Vinyl behang', 'Textiel behang']
     }
   ];
