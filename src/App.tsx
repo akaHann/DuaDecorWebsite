@@ -7,6 +7,7 @@ import { Collections } from './components/Collections';
 import { About } from './components/About';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
+import { Privacy } from './components/Privacy';
 import { ProductModal } from './components/ProductModal';
 import { ComingSoonModal } from './components/ComingSoonModal';
 import { Toaster } from 'sonner';
@@ -15,6 +16,35 @@ export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
   const [comingSoonOpen, setComingSoonOpen] = useState(false);
+  const [showPrivacy, setShowPrivacy] = useState(false);
+
+  // Handle navigation
+  React.useEffect(() => {
+    const handleHashChange = () => {
+      if (window.location.hash === '#privacy') {
+        setShowPrivacy(true);
+        // Scroll to top when showing privacy page
+        window.scrollTo(0, 0);
+      } else {
+        setShowPrivacy(false);
+      }
+    };
+
+    // Check initial hash
+    handleHashChange();
+
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  if (showPrivacy) {
+    return (
+      <LanguageProvider>
+        <Privacy />
+      </LanguageProvider>
+    );
+  }
 
   return (
     <LanguageProvider>

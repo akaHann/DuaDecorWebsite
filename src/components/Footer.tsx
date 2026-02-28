@@ -151,6 +151,14 @@ export function Footer() {
               BTW: BE0848.653.295
             </p>
           </div>
+          <div className="mt-4 text-center">
+            <a 
+              href="#privacy" 
+              className="text-gray-400 hover:text-white transition-colors text-sm"
+            >
+              Privacyverklaring
+            </a>
+          </div>
         </div>
       </div>
     </footer>

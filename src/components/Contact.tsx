@@ -284,22 +284,20 @@ export function Contact() {
               </div>
 
               <div className="flex items-start">
-                <div className="flex items-start">
-                  <input
-                    type="checkbox"
-                    id="privacy"
-                    name="privacy"
-                    checked={formData.privacy}
-                    onChange={handleChange}
-                    className="mt-1 w-5 h-5 border-2 border-gray-300 rounded cursor-pointer text-evergreen focus:ring-2 focus:ring-evergreen focus:ring-offset-2 transition-colors checked:bg-evergreen checked:border-evergreen"
-                  />
-                  <label 
-                    htmlFor="privacy" 
-                    className="ml-3 text-sm text-gray-600 cursor-pointer"
-                  >
-                    {t('privacyAgreement')} {t('required')}
-                  </label>
-                </div>
+                <input
+                  type="checkbox"
+                  id="privacy"
+                  name="privacy"
+                  checked={formData.privacy}
+                  onChange={handleChange}
+                  className="mt-1 w-5 h-5 border-2 border-gray-300 rounded cursor-pointer text-evergreen focus:ring-2 focus:ring-evergreen focus:ring-offset-2 transition-colors checked:bg-evergreen checked:border-evergreen"
+                />
+                <label 
+                  htmlFor="privacy" 
+                  className="ml-4 text-sm text-gray-600 cursor-pointer mt-1"
+                >
+                  Ik ga akkoord met de <a href="#privacy" className="text-evergreen hover:text-evergreen-light underline">privacyverklaring</a> {t('required')}
+                </label>
               </div>
 
               {formStatus === 'success' && (
